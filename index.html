@@ -76,7 +76,7 @@
             <a class="waves-effect waves-light btn-small"><i class="material-icons left">clear</i>Limpar</a>
           </div>
 
-          
+
 
         </div>
 
@@ -87,15 +87,17 @@
             <h5 class="header adjust-top col s12 light">Consulta de Ruas</h5>
             <!-- INPUT UF -->
             <div class="input-field col s12 m6 l3">
-              <i class="material-icons prefix">account_circle</i>
-              <input id="uf-rua" type="text" class="validate">
-              <label for="uf-rua">UF</label>
+              <i style="margin-left: -123px;" class="material-icons prefix">account_circle</i>
+              <select onchange="buscarCidades(this.value)" id="lista-ufs" style="width: 80%;margin-left: 45px;" class="browser-default">
+
+              </select>
             </div>
             <!-- INPUT CIDADE  -->
             <div class="input-field col s12 m6 l3">
-              <i class="material-icons prefix">location_city</i>
-              <input id="cidade-rua" type="text" class="validate active">
-              <label for="cidade-rua">CIDADE</label>
+              <i style="margin-left: -123px;" class="material-icons prefix">location_city</i>
+              <select id="lista-cidades" style="width: 80%;margin-left: 45px;" class="browser-default">
+
+              </select>
             </div>
             <!-- INPUT RUA  -->
             <div class="input-field col s12 m6 l3">
@@ -113,7 +115,7 @@
 
           <!-- lista de ruas aqui -->
           <ul id="lista-ruas" class="collection">
-           
+
           </ul>
 
         </div>

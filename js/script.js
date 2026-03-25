@@ -51,3 +51,36 @@ function mostrarRua() {
 			document.querySelector("#lista-ruas").innerHTML = listaRuas
 		})
 }
+
+function buscarUFs(){
+	url = "https://servicodados.ibge.gov.br/api/v1/localidades/estados"
+	listaUfs = '<option value="" disabled selected>Escolha uma UF</option>'
+
+	fetch(url)
+	.then((res)=>{return res.json()})
+	.then((ufs)=>{
+
+		for(let uf of ufs){
+			listaUfs += `<option value="${uf.sigla}">${uf.nome}</option>`
+		}
+		document.querySelector("#lista-ufs").innerHTML = listaUfs
+	})
+}
+
+buscarUFs()
+
+function buscarCidades(uf){
+
+	url = `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios`
+	listaCidades = '<option value="" disabled selected>Escolha umaa Cidade</option>'
+
+	fetch(url)
+	.then((res)=>{return res.json()})
+	.then((cidades)=>{
+		
+		for(let cidade of cidades){
+			listaCidades += `<option value="${cidade.nome}">${cidade.nome}</option>`
+		}
+		document.querySelector("#lista-cidades").innerHTML = listaCidades
+	})
+}
