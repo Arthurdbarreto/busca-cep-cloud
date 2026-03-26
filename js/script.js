@@ -1,5 +1,6 @@
 // Função de buscar por CEP
 function mostrar() {
+
 	cep = document.getElementById("cep").value // pegando valor do cep
 	// url = "https://viacep.com.br/ws/"+cep+"/json/" // url do viacep
 	url = `https://viacep.com.br/ws/${cep}/json/` // url do viacep
@@ -24,8 +25,8 @@ function mostrar() {
 
 // Função de buscar por rua
 function mostrarRua() {
-	uf = $("#uf-rua").val()
-	cidade = $("#cidade-rua").val()
+	uf = $("#lista-ufs").val()
+	cidade = $("#lista-cidades").val()
 	rua = $("#rua").val()
 
 	url = `https://viacep.com.br/ws/${uf}/${cidade}/${rua}/json/` // url do viacep
@@ -41,7 +42,7 @@ function mostrarRua() {
 
 			for (let rua of ruas) {
 				dadosRua = ""
-				const {ddd, ibge, regiao, siafi, ...ruaNova} = rua
+				const { ddd, ibge, regiao, siafi, ...ruaNova } = rua
 				for (let prop in ruaNova) {
 					dadosRua = dadosRua + `<h6>${ruaNova[prop]}</h6>`
 				}
@@ -49,38 +50,45 @@ function mostrarRua() {
 			}
 
 			document.querySelector("#lista-ruas").innerHTML = listaRuas
+			confetti();
 		})
 }
 
-function buscarUFs(){
+function buscarUFs() {
+
+	const cepInput = document.getElementById("cep");
+
+	const mask = IMask(cepInput, {
+		mask: '00000-000'
+	});
+
 	url = "https://servicodados.ibge.gov.br/api/v1/localidades/estados"
 	listaUfs = '<option value="" disabled selected>Escolha uma UF</option>'
 
-	fetch(url)
-	.then((res)=>{return res.json()})
-	.then((ufs)=>{
+	axios.get(url) // AXIOS
+		.then((ufs) => {
+			console.log("com axios", ufs.data)
 
-		for(let uf of ufs){
-			listaUfs += `<option value="${uf.sigla}">${uf.nome}</option>`
-		}
-		document.querySelector("#lista-ufs").innerHTML = listaUfs
-	})
+			for (let uf of ufs.data) {
+				listaUfs += `<option value="${uf.sigla}">${uf.nome}</option>`
+			}
+			document.querySelector("#lista-ufs").innerHTML = listaUfs
+		})
 }
 
 buscarUFs()
 
-function buscarCidades(uf){
+function buscarCidades(uf) {
 
 	url = `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios`
 	listaCidades = '<option value="" disabled selected>Escolha umaa Cidade</option>'
 
-	fetch(url)
-	.then((res)=>{return res.json()})
-	.then((cidades)=>{
-		
-		for(let cidade of cidades){
+	$.get(url, (cidades) => { //AJAX
+
+		for (let cidade of cidades) {
 			listaCidades += `<option value="${cidade.nome}">${cidade.nome}</option>`
 		}
 		document.querySelector("#lista-cidades").innerHTML = listaCidades
 	})
+
 }
